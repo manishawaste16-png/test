@@ -19,3 +19,14 @@ buildscript {
 }
 
 apply plugin: "com.facebook.react.rootproject"
+
+allprojects {
+    repositories {
+        mavenLocal()
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+        // Salesforce artifacts may be hosted on Salesforce JFrog repo; include as fallback
+        maven { url 'https://salesforce.jfrog.io/artifactory/maven' }
+    }
+}
