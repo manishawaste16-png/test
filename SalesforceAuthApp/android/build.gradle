@@ -19,3 +19,24 @@ buildscript {
 }
 
 apply plugin: "com.facebook.react.rootproject"
+
+allprojects {
+    repositories {
+        mavenLocal()
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+        // Salesforce artifacts may be hosted on Salesforce JFrog repo; include only when credentials are provided
+        def _sfUser = findProperty('salesforceMavenUser') ?: System.getenv('SALESFORCE_MAVEN_USER')
+        def _sfPass = findProperty('salesforceMavenPassword') ?: System.getenv('SALESFORCE_MAVEN_PASSWORD')
+        if (_sfUser && _sfPass) {
+            maven {
+                url 'https://salesforce.jfrog.io/artifactory/maven'
+                credentials {
+                    username = _sfUser
+                    password = _sfPass
+                }
+            }
+        }
+    }
+}
